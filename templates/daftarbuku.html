@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Perpustakaan</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+
+</head>
+
+<header>
+  <div class="navbar bg-white">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-900" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+        </div>
+        <ul tabindex="0" class="text-blue-900 menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 rounded-box w-52">
+          <li><a href="{{url_for('index')}}">Home</a></li>
+          <li><a href="{{url_for('daftarbuku')}}">Daftar Buku</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="navbar-center">
+      <a class="btn btn-ghost text-xl text-blue-900" href="{{url_for('index')}}">Sistem Perpustakaan</a>
+    </div>
+    <div class="navbar-end">
+     
+    </div>
+  </div>
+  
+</div>
+</header>
+
+
+<body class="antialiased font-sans bg-gray-200">
+    <div class="container mx-auto px-4 sm:px-8">
+        <div class="py-8">
+            <div>
+                <h2 class="text-2xl font-semibold leading-tight text-blue-900">Daftar Buku Yang Tersedia</h2>
+            </div>
+           <div class="py-2">
+           <a href="{{url_for ('pemesanan')}}">
+             <button
+  class=" select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-6 rounded-lg bg-blue-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+  type="button"
+>
+  Pesan
+</button></a>
+        </div>     
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                    <table class="min-w-full leading-normal text-center">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 text-left bg-gray-100 text-xs font-semibold text-blue-900 uppercase tracking-wider">
+                                    Nama Buku
+                                </th>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-blue-900 uppercase tracking-wider">
+                                    Harga Sewa
+                                </th>
+                            
+                            </tr>
+                        </thead>
+                        <tbody>
+                          {% for book in books %}
+                            <tr>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                  {% if book.picture %}
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-10 h-10">
+                                            <img class="w-full h-full rounded-full"
+                                            src="../static/images/{{book.picture}}" alt="" />
+                                            {% else %}<img src="../static/images/default.jpg" width="80" height="90">
+                                            {% endif %}                   
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-gray-900 whitespace-no-wrap">
+                                              {{book.name}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <p class="text-gray-900 whitespace-no-wrap">{{book.hargasewa|currencyFormat}}</p>
+                                </td>
+                               
+                            </tr>
+                            {% endfor %}  
+
+                            
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+  
+
+<footer class="relative bg-blue-900 pt-8 pb-6">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap text-left lg:text-left">
+      <div class="w-full lg:w-6/12 px-4">
+        <h4 class="text-3xl fonat-semibold text-white">Sistem Perpustakan</h4>
+        <h5 class="text-lg mt-0 mb-2 text-white">
+          Sistem Perpustakaan terbaik dan terkemuka, menghadiri banyak buku - buku bertemakan pengetahuan.
+        </h5>
+        
+      </div>
+      <div class="w-full lg:w-6/12 px-4">
+        <div class="flex flex-wrap items-top mb-6">
+          <div class="w-full lg:w-4/12 px-4 ml-auto">
+            <span class="block uppercase text-white text-sm font-semibold mb-2">Useful Links</span>
+            <ul class="list-unstyled">
+              <li>
+                <a class="text-gray-200 hover:text-gray-400 font-semibold block pb-2 text-sm" href="{{url_for('index')}}">Home</a>
+              </li>
+              <li>
+                <a class="text-gray-200 hover:text-gray-400 font-semibold block pb-2 text-sm" href="{{url_for('daftarbuku')}}">Daftar Buku</a>
+              </li>
+              <li>
+                <a class="text-gray-200 hover:text-gray-400 font-semibold block pb-2 text-sm" href="https://github.com/arya1351/">Github</a>
+              </li>
+              <li>
+              
+            </ul>
+          </div>
+          <div class="w-full lg:w-4/12 px-4">
+            <span class="block uppercase text-white text-sm font-semibold mb-2">Lainya</span>
+            <ul class="list-unstyled">
+              
+              <li>
+                <a class="text-gray-200 hover:text-gray-400 font-semibold block pb-2 text-sm" href=" https://wa.me/082114943996">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="my-6 border-blueGray-300">
+    <div class="flex flex-wrap items-center md:justify-between justify-center">
+      <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+        <div class="text-sm text-blueGray-500 font-semibold py-1">
+          Copyright © <span id="get-current-year"> 2023</span><a href="https://www.creative-tim.com/product/notus-js" class="text-blueGray-500 hover:text-gray-800" target="_blank">by
+          <a href="https://www.creative-tim.com?ref=njs-profile" class="text-blueGray-500 hover:text-blueGray-800">Arya, Veron and Audira</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</html>
+<script async src="https://unpkg.com/typer-dot-js@0.1.0/typer.js"></script>

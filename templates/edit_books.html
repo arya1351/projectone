@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+  
+{% block body %}
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Manage Books</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Manage Books</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+ 
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+            <h3>Book Edit</h3>
+            <form method="post" id="bookForm" action="{{ url_for('save_book')}}">
+                <div class="card-body">               
+                                        
+                        <div class="form-group">                          
+                            <label for="book" class="control-label">Book</label>                            
+                            <input type="text" name="name" id="name" autocomplete="off" class="form-control" placeholder="book name" value="{{books.name}}"/>                             
+                        </div>                    
+                        <div class="form-group">                          
+                            <label for="book" class="control-label">ISBN No</label>                         
+                            <input type="text" name="isbn" id="isbn" autocomplete="off" class="form-control" placeholder="isbn name" value="{{books.isbn}}"/>                                        
+                        </div>  
+                        <div class="form-group">                          
+                          <label for="book" class="control-label">Harga Sewa</label>                         
+                          <input type="text" name="hargasewa" id="hargasewa" autocomplete="off" class="form-control" placeholder="Masukkan Harga Sewa" value="{{books.hargasewa}}"/>                                        
+                      </div>    
+                        <div class="form-group">                          
+                            <label for="book" class="control-label">Picture</label>                         
+                            <img src="static/images/{{books.picture}}" width="360"/>
+                        </div>                               
+                         
+                        <input type="hidden" name="bookid" id="bookid" value="{{books.bookid}}" />                                    
+                        <input type="hidden" name="action" id="action" value="updateBook" />
+                        <input type="submit" name="save" id="save" class="btn btn-info" value="Save" />                    
+                </div>
+            </form>
+            </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}

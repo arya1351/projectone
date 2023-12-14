@@ -1,0 +1,161 @@
+{% extends 'layout.html' %}
+  
+{% block body %}
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Manage Books</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Managemen Buku</li>
+            </ol>
+          </div><!-- /.col -->
+          
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+ 
+    <!-- Main content -->
+   
+      <div class="card">
+          <div class="card-header">
+            <h3 class="card-title pt-2">DataTable with default features</h3>
+            <div class="float-right col-md-2">
+              <button type="button" id="addBook" class="btn btn-info" title="Add book"><span class="glyphicon glyphicon-plus">Add Book</span></button>
+          </div>
+            </div>              
+            
+  <div class="card-body">
+  <table id="example1" class="table table-bordered table-striped">
+  <thead>
+  <tr>
+  <th>Gambar Buku</th>
+  <th>Nama Buku</th>
+  <th>Kode Buku</th>
+  <th>Harga Sewa</th>
+  <th>Aksi</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+  <tr>
+    <td>
+      {% if book.picture %}
+          <img src="../static/images/{{book.picture}}" width="80" height="90">
+      {% else %}
+          <img src="../static/images/default.jpg" width="80" height="90">
+      {% endif %}                   
+      </td>
+      <td>{{book.name}}</td>
+      <td>{{book.isbn}}</td>            
+      <td>{{book.hargasewa|currencyFormat}}</td> 
+      <td>
+        <a href="{{url_for('edit_book', bookid=book.bookid)}}" class="btn btn-primary">Edit</a>  
+        <a href="{{url_for('delete_book', bookid=book.bookid)}}" class="btn btn-danger">Delete</a>
+      </td>
+  </tr>
+  {% endfor %}  
+  </tbody>
+  <tfoot>
+  <tr>
+  <th>Gambar Buku</th>
+  <th>Nama Buku</th>
+  <th>Kode Buku</th>
+  <th>Harga Sewa</th>
+  <th>Aksi</th>
+  </tr>
+  </tfoot>
+  </table>
+  </div>
+  
+  </div>
+  
+     
+
+    
+             
+    <!-- /.content -->
+    <div class="modal fade" id="bookModal">
+        <div class="modal-dialog">
+            <form method="post" id="bookForm" action="{{ url_for('save_book')}}" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title">Add New</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">                          
+                        <label for="book" class="control-label">Book</label>                            
+                        <input type="text" name="name" id="name" autocomplete="off" class="form-control" placeholder="Nama Buku"/>
+                                         
+                    </div>
+                    <div class="form-group">                          
+                        <label for="book" class="control-label">ISBN No</label>                         
+                        <input type="text" name="isbn" id="isbn" autocomplete="off" class="form-control" placeholder="isbn name"/>        
+                    </div>
+                    <div class="form-group">                          
+                      <label for="book" class="control-label">Harga Sewa</label>                         
+                      <input type="text" name="hargasewa" id="hargasewa" autocomplete="off" class="form-control" placeholder="Masukkan Harga Sewa"/>        
+                  </div>
+                    <div class="form-group">
+                        <label>File Upload</label>
+                        <input type="file" name="uploadFile" accept=".jpg, .png" />
+                    </div>
+ 
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="hidden" name="action" id="action" value="" />
+                <input type="submit" name="save" id="save" class="btn btn-primary" value="Save changes" />
+                </div>
+            </div>
+            </form>
+
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    
+
+<script src="{{ url_for('static',filename='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<script src="{{ url_for('static',filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/jszip/jszip.') }}"></script>
+<script src="{{ url_for('static',filename='plugins/pdfmake/pdfmake.') }}"></script>
+<script src="{{ url_for('static',filename='plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/buttons.html5.') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/buttons.print.') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/buttons.colVis.') }}"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+{% endblock %}
